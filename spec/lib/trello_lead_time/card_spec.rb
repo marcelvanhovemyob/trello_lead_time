@@ -52,27 +52,44 @@ describe TrelloLeadTime::Card do
     describe ".labels" do
       it "should have labels" do
         expect(subject.labels.collect(&:name)).to eq(%w{iOS API})
+      end
+    end
 
+    describe ".labels_as_csv" do
+      it "should have labels show as csv" do
+        expect(subject.labels_as_csv).to eq("iOS API ")
+      end
+    end
+
+    describe ".short_id" do
+      it "should have a short id" do
+        expect(subject.short_id).to eq(1006)
+      end
+    end
+
+    describe ".short_url" do
+      it "should have a short_url" do
+        expect(subject.short_url).to eq("https://trello.com/c/yQxfwOWB")
       end
     end
 
     describe ".has_label_name?" do
       it "should not have a named label" do
-        subject.has_label_name?("blah").should be_false
+        subject.has_label_name?("blah").should be_falsey
       end
 
       it "should have a named label" do
-        subject.has_label_name?("ios").should be_true
+        subject.has_label_name?("ios").should be_truthy
       end
     end
 
     describe ".has_label_color?" do
       it "should not have a color label" do
-        subject.has_label_color?("yellow").should be_false
+        subject.has_label_color?("yellow").should be_falsey
       end
 
       it "should have a color label" do
-        subject.has_label_color?("Green").should be_true
+        subject.has_label_color?("Green").should be_truthy
       end
     end
   end

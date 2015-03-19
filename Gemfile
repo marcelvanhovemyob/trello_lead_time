@@ -4,6 +4,7 @@ source 'https://rubygems.org'
 gemspec
 gem "rspec"
 gem 'pry'
-gem 'pry-debugger'
+#gem 'pry-debugger'
+gem 'byebug'
 gem 'ruby-trello'
 gem 'webmock'

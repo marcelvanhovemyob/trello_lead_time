@@ -9,6 +9,14 @@ module TrelloLeadTime
       @timeline = Timeline.for_trello_card(trello_card)
     end
 
+    def short_id
+      @trello_card.short_id
+    end
+
+    def short_url
+      @trello_card.short_url
+    end
+
     def name
       @trello_card.name
     end
@@ -58,6 +66,12 @@ module TrelloLeadTime
 
     def labels
       @_labels ||= @trello_card.labels.map { |label| OpenStruct.new({name: label.name, color: label.color}) }
+    end
+
+    def labels_as_csv
+      s = ""
+      @trello_card.labels.each { |label| s += label.name+' '}
+      return s
     end
 
     private

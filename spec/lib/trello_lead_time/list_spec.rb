@@ -187,6 +187,11 @@ describe TrelloLeadTime::List do
     expect(times[:average][:age]).to eq({"#tag1" => 428155, "#tag2" => 855608, "#tag3" => 2373000})
   end
 
+  it "should count the items in progress (wip)" do
+    stub_all_requests
+    subject.wip.should == 4
+  end
+
   private
 
   def stub_all_requests

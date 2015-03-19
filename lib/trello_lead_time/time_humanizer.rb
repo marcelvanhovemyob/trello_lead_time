@@ -9,5 +9,15 @@ module TrelloLeadTime
         s
       }.join(' ')
     end
+    def self.humanize_to_days(seconds)
+          days = seconds.to_f / 86400
+          return "" + days.round(1).to_s
+    end
+    def self.work_item(label)
+      if label.strip!.to_s == 'Issue'
+        return 'Incident'
+      end
+      return 'Goal'
+    end
   end
 end

@@ -69,6 +69,26 @@ module TrelloLeadTime
       response
     end
 
+    def report_wip(lists)
+      report = "".10.chr
+      lists.each do |list|
+        report += "WIP of "+list.to_s+find_list_by_name(list).wip.to_s+10.chr
+      end
+      report
+    end
+
+
+
+    def report(name_of_list_with_done_cards)
+      report = ""
+      report +=  report_wip(%w{ToDo Doing TeamDone})
+      list = find_list_by_name(name_of_list_with_done_cards)
+      list.done_or_closed_cards.each do |card|
+        report += "SB"+card.short_id.to_s+", "+TrelloLeadTime::TimeHumanizer.humanize_to_days(card.cycle_time)+", , ,Y,SB,"+TrelloLeadTime::TimeHumanizer.work_item(card.labels_as_csv).to_s+", ,"+card.short_url+", "+10.chr
+      end
+      report
+    end
+
     private
 
     def find_list_by_name(name)
