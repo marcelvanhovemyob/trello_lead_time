@@ -22,8 +22,8 @@ describe TrelloLeadTime::TimeHumanizer do
     context " that gets not an Issue as an input value" do
       let(:label) { "blah" }
       subject { TrelloLeadTime::TimeHumanizer.work_item(label) }
-      it "should return Goal" do
-        subject.should == "Goal"
+      it "should return Project" do
+        subject.should == "Project"
       end
     end
     context " that gets an Issue as an input value" do

@@ -10,7 +10,7 @@ describe TrelloLeadTime::ArraySearcher do
     end
 
     it "matches name with expression" do
-      subject.element_matches_expression?("Development [4]", "Development").should be_true
+      subject.element_matches_expression?("Development [4]", "Development").should be_truthy
     end
   end
 end

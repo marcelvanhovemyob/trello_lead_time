@@ -17,7 +17,7 @@ module TrelloLeadTime
       if label.strip!.to_s == 'Issue'
         return 'Incident'
       end
-      return 'Goal'
+      return 'Project'
     end
   end
 end

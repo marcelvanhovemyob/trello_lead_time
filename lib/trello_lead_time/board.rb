@@ -70,9 +70,9 @@ module TrelloLeadTime
     end
 
     def report_wip(lists)
-      report = "".10.chr
+      report = ""+10.chr
       lists.each do |list|
-        report += "WIP of "+list.to_s+find_list_by_name(list).wip.to_s+10.chr
+        report += "WIP of "+list.to_s+" ,"+find_list_by_name(list).wip.to_s+10.chr
       end
       report
     end
@@ -118,4 +118,43 @@ module TrelloLeadTime
     end
 
   end
+
+  class Report
+    def self.print_report(board, source_lists, board_url)
+      report = ""+10.chr
+      report +=  "-" * 60+10.chr
+      report +=  "Calculating metrics for:"+10.chr
+      report +=  "#{board_url}"+10.chr
+      report +=  "-" * 60+10.chr
+
+      source_lists.each do |source_list|
+        totals   = board.totals(source_list)
+        averages = board.averages(source_list)
+
+        report +=  "Overall metrics for: #{source_list}"+10.chr
+        report +=  "#{board.report(source_list)}"+10.chr
+
+        report +=  "-" * 60+10.chr
+        report +=  "Average Card Age:,   #{TrelloLeadTime::TimeHumanizer.humanize_seconds(averages[:age][:overall])}"+10.chr
+        report +=  "Average Lead Time:,  #{TrelloLeadTime::TimeHumanizer.humanize_seconds(averages[:lead_time][:overall])}"+10.chr
+        report +=  "Average Queue Time:, #{TrelloLeadTime::TimeHumanizer.humanize_seconds(averages[:queue_time][:overall])}"+10.chr
+        report +=  "Average Cycle Time:, #{TrelloLeadTime::TimeHumanizer.humanize_seconds(averages[:lead_time][:overall])}"+10.chr
+        report +=  ""+10.chr
+        report +=  "Total Card Age:,     #{TrelloLeadTime::TimeHumanizer.humanize_seconds(totals[:age][:overall])}"+10.chr
+        report +=  "Total Lead Time:,    #{TrelloLeadTime::TimeHumanizer.humanize_seconds(totals[:lead_time][:overall])}"+10.chr
+        report +=  "Total Queue Time:,   #{TrelloLeadTime::TimeHumanizer.humanize_seconds(totals[:queue_time][:overall])}"+10.chr
+        report +=  "Total Cycle Time:,   #{TrelloLeadTime::TimeHumanizer.humanize_seconds(totals[:lead_time][:overall])}"+10.chr
+
+        report +=  ""+10.chr
+        report +=  "Finance type breakdown (total lead time per label):"+10.chr
+        totals[:lead_time][:finance_types].each do |label, value|
+          report +=  "#{label}: #{TrelloLeadTime::TimeHumanizer.humanize_seconds(value)}"+10.chr
+        end
+        report +=  "-" * 60+10.chr
+        return report
+      end
+    end
+
+  end
+
 end
