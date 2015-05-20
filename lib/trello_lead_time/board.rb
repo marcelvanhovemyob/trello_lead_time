@@ -81,7 +81,7 @@ module TrelloLeadTime
 
     def report(name_of_list_with_done_cards)
       report = ""
-      report +=  report_wip(%w{ToDo Doing TeamDone})
+      report +=  report_wip(%w{Ready Doing TeamDone})
       list = find_list_by_name(name_of_list_with_done_cards)
       list.done_or_closed_cards.each do |card|
         report += "SB"+card.short_id.to_s+", "+TrelloLeadTime::TimeHumanizer.humanize_to_days(card.cycle_time)+", , ,Y,SB,"+TrelloLeadTime::TimeHumanizer.work_item(card.labels_as_csv).to_s+", ,"+card.short_url+", "+10.chr
@@ -93,6 +93,7 @@ module TrelloLeadTime
 
     def find_list_by_name(name)
       matched_name = find_name_like(@_lists.keys, name)
+
       if matched_name.nil?
         trello_list = @trello_board.lists({filter: 'all'}).detect { |l| element_matches_expression?(l.name, name) }
         @_lists[name] = TrelloLeadTime::List.from_trello_list(trello_list) if trello_list
